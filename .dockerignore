@@ -1,0 +1,15 @@
+node_modules
+data
+tests
+.env
+.env.*
+!.env.example
+.git
+.claude
+*.log
+Dockerfile
+.dockerignore
+render.yaml
+DEPLOY.md
+README.md
+backups

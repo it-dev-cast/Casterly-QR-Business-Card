@@ -1,0 +1,25 @@
+{
+  "name": "qr-business-card",
+  "version": "1.0.0",
+  "private": true,
+  "description": "CardDesk: QR business cards for employees from nexusAuth (Nexus core)",
+  "type": "module",
+  "engines": {
+    "node": ">=22.5"
+  },
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "node --watch server/index.js",
+    "test": "node --test --test-concurrency=1 \"tests/**/*.test.js\"",
+    "test:db": "node --env-file=.env --test --test-concurrency=1 \"tests/**/*.test.js\"",
+    "import-old": "node --disable-warning=ExperimentalWarning scripts/import-old-carddesk.js"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "pg": "^8.23.1",
+    "qrcode-generator": "^1.4.4"
+  },
+  "devDependencies": {
+    "pg-mem": "^3.0.14"
+  }
+}

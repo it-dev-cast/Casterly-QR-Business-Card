@@ -1,0 +1,23 @@
+# Render Blueprint for CardDesk. CardDesk needs to reach nexusAuth's API and nexusAuth's PostgreSQL
+# database, so only use this if nexusAuth is reachable from Render. Otherwise run the Docker image on the
+# same server as nexusAuth (see DEPLOY.md).
+services:
+  - type: web
+    name: carddesk
+    runtime: docker
+    plan: starter
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: TRUST_PROXY
+        value: "true"      # Render terminates HTTPS in front of the app
+      - key: NEXUSAUTH_URL
+        sync: false        # e.g. https://nexus.casterly.com
+      - key: NEXUSAUTH_EMAIL
+        sync: false        # CardDesk's nexusAuth service account (operator or admin role)
+      - key: NEXUSAUTH_PASSWORD
+        sync: false
+      - key: DATABASE_URL
+        sync: false        # postgresql://carddesk_app:<password>@<host>:5432/nexus_auth
+      - key: PUBLIC_URL
+        sync: false        # optional: your custom domain, e.g. https://cards.casterly.com
