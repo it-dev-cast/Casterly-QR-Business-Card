@@ -87,7 +87,16 @@ export function createApp({ config, store, directory, nexus }) {
   app.use((req, res, next) => {
     if (["GET", "HEAD", "OPTIONS"].includes(req.method)) return next();
     const origin = req.get("origin");
-    if (origin && origin !== `${req.protocol}://${req.get("host")}`) return next(new HttpError(403, "Cross-site request blocked"));
+
+let expectedOrigin = `${req.protocol}://${req.get("host")}`;
+
+if (config.publicUrl && config.publicUrl !== LAN_MODE) {
+  try {
+    expectedOrigin = new URL(config.publicUrl).origin;
+  } catch {
+    // Fall back to the request-derived origin.
+  }
+}
     next();
   });
 
